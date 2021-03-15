@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 
     //res.sendFile('./views/index.html', { root: __dirname });
-});
+}); 
 
 app.get('/about', (req, res) => {
     res.render('about', {title: 'About'});
