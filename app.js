@@ -24,37 +24,47 @@ app.use(express.static('public'));
 app.use(morgan('dev'));
 
 //mongo and mongoose routing
-app.get('/add-blog', (req, res) => {
-    const blog = new Blog({
-        title: 'new',
-        snippet: 'about new',
-        body: 'more about'
-    });
+// app.get('/add-blog', (req, res) => {
+//     const blog = new Blog({
+//         title: 'new',
+//         snippet: 'about new',
+//         body: 'more about'
+//     });
 
-    blog.save()
-    .then((result) => {
-        res.send(result)
-    })
-    .catch((err) => {
-        console.log(err);
-    });
-})
+//     blog.save()
+//     .then((result) => {
+//         res.send(result)
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
+// });
 
+// app.get('/all-blogs', (req, res) => {
+//    Blog.find()
+//    .then((result) => {
+//        res.send(result);
+//    })
+//    .catch((err) => {
+//        console.log(err);
+//    })
+// })
 
+// app.get('/single-blog', (req, res) => {
+//     Blog.findById('6050ee6e768ecb2cc4d017af')
+//     .then((result) => {
+//         res.send(result)
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     })
+// })
+
+// routes
 
 app.get('/', (req, res) => {
     
-        const blogs = [
-            {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-            {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-            {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-          ];
-      
-
-    // renders an ejs view
-    res.render('index', { title: 'Home', blogs });
-
-
+        res.redirect('/blogs');
     //res.sendFile('./views/index.html', { root: __dirname });
 }); 
 
@@ -63,6 +73,17 @@ app.get('/about', (req, res) => {
 
     //res.sendFile('./views/about.html', { root: __dirname });
 });
+
+// blog routes
+app.get('/blogs', (req, res) => {
+    Blog.find().sort({ createdAt: -1 })
+    .then((result) => {
+        res.render('index', {title: 'All Blogs', blogs: result})
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+})
 
 app.get('/blogs/create', (req, res) => {
     res.render('create', {title: 'Create a new blog'});
