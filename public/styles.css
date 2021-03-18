@@ -63,8 +63,33 @@
       }
   
       /* index styles */
+      .blogs {
+        display: block;
+        margin: 40px 0;
+        padding-left: 30px;
+        border-left: 6px solid coral;
+      }
+      .blogs a:hover h3{
+        color: coral;
+      }
+
   
       /* details styles */
+      .details{
+        position: relative;
+      }
+      .delete{
+        position: absolute;
+        background-color: plum;
+        top: 0;
+        right: 0;
+        border-radius: 20%;
+        padding: 8px;
+      }
+      .delete:hover{
+        cursor: pointer;
+        box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+      }
   
       /* create styles */
       .create-blog form{

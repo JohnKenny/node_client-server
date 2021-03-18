@@ -1,8 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const { result } = require('lodash');
-const Blog = require('./models/blog');
+//const { result } = require('lodash');
+const blogRoutes = require('./routes/blogRoutes');
 
 // connect to mongodb
 const dbURI = 'mongodb+srv://user34:Termina34@cluster0.xq4sd.mongodb.net/node-blogs?retryWrites=true&w=majority';
@@ -21,6 +21,7 @@ app.set('views', 'views');
 
 // middleware and static files
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true } ));
 app.use(morgan('dev'));
 
 //mongo and mongoose routing
@@ -75,19 +76,7 @@ app.get('/about', (req, res) => {
 });
 
 // blog routes
-app.get('/blogs', (req, res) => {
-    Blog.find().sort({ createdAt: -1 })
-    .then((result) => {
-        res.render('index', {title: 'All Blogs', blogs: result})
-    })
-    .catch((err) => {
-        console.log(err);
-    })
-})
-
-app.get('/blogs/create', (req, res) => {
-    res.render('create', {title: 'Create a new blog'});
-})
+app.use(blogRoutes);
 
 // redirects to /about
 // app.get('/about-us', (req, res) => {
@@ -99,4 +88,4 @@ app.use((req, res) => {
     res.status(404).render('404', {title: '404'});
 
     //res.status(404).sendFile('./views/404.html', { root: __dirname });
-})
+});
